@@ -10,8 +10,13 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
+    "email-crawler": "^1.0.4",
+    "email-extractor": "^0.2.9",
     "express": "~4.15.5",
+    "install": "^0.10.2",
+    "js-crawler": "^0.3.19",
     "morgan": "~1.9.0",
+    "npm": "^5.6.0",
     "serve-favicon": "~2.4.5"
   }
 }
