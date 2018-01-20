@@ -91,4 +91,4 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 var cyCrawler = require('../modules/crawler/CYCrawler');
-cyCrawler.startFuck('http://www.sina.com/');
+cyCrawler.startFuck('https://www.douban.com/');
