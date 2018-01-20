@@ -1,5 +1,6 @@
 var Crawler = require("js-crawler");
 var filter = require('./CYFilter');
+var connector = require('../mysql_socket/CYConnector');
 
 function startFuck(url) {
     new Crawler().configure({depth: 10})
@@ -10,7 +11,13 @@ function startFuck(url) {
 
             if (list !== null){
                 if (list.length > 0){
-                    console.log(list);
+                    //console.log(list);
+                    list.forEach(function (value) {
+                        var query = "INSERT INTO `cy_email` (`email`, `cdate`) VALUES ('"+ value+"' , now() ) ";
+                        connector.performQuery(query, function (err, result) {
+                            //console.log(err);
+                        });
+                    })
                 }
             }
             //console.log(page);
