@@ -91,4 +91,5 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 var cyCrawler = require('../modules/crawler/CYCrawler');
-cyCrawler.startFuck('http://blog.163.com//');
+//cyCrawler.startCrawl('https://www.email-format.com/');
+cyCrawler.testCrawl('13951025847 adasdawasd');
