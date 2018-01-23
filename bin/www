@@ -91,5 +91,5 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 var cyCrawler = require('../modules/crawler/CYCrawler');
-//cyCrawler.startCrawl('https://www.email-format.com/');
-cyCrawler.testCrawl('13951025847 adasdawasd');
+cyCrawler.startCrawl('https://tieba.baidu.com/p/5521502244');
+//cyCrawler.testCrawl('asdasdad 13951025847asd asdasdadwdasdasdawasdawasd');

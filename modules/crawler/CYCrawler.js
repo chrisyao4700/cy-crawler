@@ -3,42 +3,55 @@ var filter = require('./CYFilter');
 var connector = require('../mysql_socket/CYConnector');
 
 function startCrawl(url) {
-    //console.log('I AM AT START START CRAWL');
+
     new Crawler().configure({depth: 10})
         .crawl(url, function (page) {
-            //console.log(page);
-            //console.log(page.url);
-            //console.log(page.body);
-            var list = filter.extractEmails(page.body);
-            var listSMS = filter.extractNumbers(page.body);
+            //var list = filter.extractEmails(page.body);
+            //var listSMS = filter.extractNumbers(page.body);
             console.log(page.url);
-            console.log(listSMS);
+            var handle_email = function (elist) {
+                if (elist !== null) {
+                    if (elist.length > 0) {
+                        //console.log(list);
+                        elist.forEach(function (value) {
 
-            if (list !== null) {
-                if (list.length > 0) {
-                    //console.log(list);
-                    list.forEach(function (value) {
-                        var query = "INSERT INTO `cy_email` (`email`, `cdate`) VALUES ('" + value + "' , now() ) ";
-                        console.log(query);
-                        connector.performQuery(query, function (err, result) {
-                            //console.log(err);
+                            var query = "INSERT INTO `cy_email` (`email`, `cdate`) VALUES ('" + value + "' , now() ) ";
+                            //console.log(query);
+                            connector.performQuery(query, function (err, result) {
+                                //console.log(err);
+                                if (!err) {
 
-                        });
-                    })
+                                    console.log('FOUND EMAIL:' + value);
+                                }else {
+                                    console.log('')
+                                }
+                            });
+                        })
+                    }
                 }
-            }
-            if (listSMS != null) {
-                if (listSMS.length > 0) {
-                    listSMS.forEach(function (value) {
-                        var query = "INSERT INTO `jl_sms` (`cell`, `cdate`) VALUES ('" + value + "' , now() ) ";
-                        console.log(query);
-                        connector.performQuery(query, function (err, result) {
-                            //console.log(err);
+            };
+            var handle_sms = function (slist) {
+                if (slist != null) {
+                    if (slist.length > 0) {
+                        slist.forEach(function (value) {
+                            var query = "INSERT INTO `jl_sms` (`cell`, `cdate`) VALUES ('" + value + "' , now() ) ";
+                            //console.log(query);
+                            //console.log(query);
+                            connector.performQuery(query, function (err, result) {
+                                //console.log(err);
+                                if (!err) {
+                                    console.log('FOUND NUMBER:' + value);
+                                }else {
+                                    console.log(err);
+                                    console.log('INSERT NUMBER FAIL' + value);
+                                }
 
-                        });
-                    })
+                            });
+                        })
+                    }
                 }
-            }
+            };
+            filter.extractEmailsAndSMS(page.body, handle_email, handle_sms);
             //console.log(page);
         }, function (response) {
             // console.log("ERROR occurred:");
@@ -49,16 +62,26 @@ function startCrawl(url) {
 }
 
 function testCrawl(text) {
-    var list = filter.extractEmails(text);
-    if (list !== null) {
-        list.forEach(function (value) {
-            console.log(value);
-        });
-    }else{
-        console.log('CANNOT FIND ANY MATCH IN ' + "'" + text + "'");
+    console.log(text);
+    filter.extractEmailsAndSMS(text, function (elist) {
+        if (elist !== null) {
+            elist.forEach(function (value) {
+                console.log('FOUND EMAIL:' + value);
+            });
+        } else {
+            console.log('CANNOT FIND ANY MATCH EMAIL IN ' + "'" + text + "'");
+        }
 
-    }
-
+    }, function (slist) {
+        //console.log('I AM AT FINISH');
+        if (slist !== null) {
+            slist.forEach(function (value) {
+                console.log('FOUND SMS:' + value);
+            });
+        } else {
+            console.log('CANNOT FIND ANY MATCH NUMBER IN ' + "'" + text + "'");
+        }
+    });
 }
 
 
