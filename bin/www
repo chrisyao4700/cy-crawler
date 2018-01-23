@@ -91,4 +91,5 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 var cyCrawler = require('../modules/crawler/CYCrawler');
-cyCrawler.startFuck('http://blog.163.com//');
+cyCrawler.startCrawl('https://tieba.baidu.com/p/5521502244');
+//cyCrawler.testCrawl('asdasdad 13951025847asd asdasdadwdasdasdawasdawasd');
