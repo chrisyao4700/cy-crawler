@@ -42,7 +42,7 @@ function startCrawl(url) {
                                 if (!err) {
                                     console.log('FOUND NUMBER:' + value);
                                 }else {
-                                    console.log(err);
+                                    //console.log(err);
                                     console.log('INSERT NUMBER FAIL' + value);
                                 }
 
