@@ -27,6 +27,7 @@ function extractEmailsAndSMS(text, finish_email, finish_sms) {
         finish_sms(null);
     }
 }
+//SOME CHANGE
 
 function checkSecondNumber(text) {
     if (text.substr(1, 1) !== '1'
