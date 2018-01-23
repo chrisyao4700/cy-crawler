@@ -17,6 +17,7 @@ function extractEmailsAndSMS(text, finish_email, finish_sms) {
                 && value.length === 11
                 && value.substr(0, 1) === '1'
                 && value.indexOf('_') < 0
+                && value.indexOf('-') < 0
                 && checkSecondNumber(value) === true) {
                 numbers.push(value);
             }
@@ -27,6 +28,7 @@ function extractEmailsAndSMS(text, finish_email, finish_sms) {
         finish_sms(null);
     }
 }
+
 //SOME CHANGE
 
 function checkSecondNumber(text) {
